@@ -20,5 +20,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    app.balanceloader:
+       class: App\Service\RebalanceLoad
+
+    app.loadresolver:
+        class: App\Service\LoadResolver
+        
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

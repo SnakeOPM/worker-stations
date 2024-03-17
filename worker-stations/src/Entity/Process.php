@@ -3,11 +3,25 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Controller\CreateProcessController;
 use App\Repository\ProcessRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ApiResource]
 #[ORM\Entity(repositoryClass: ProcessRepository::class)]
+#[ApiResource(
+    operations:[
+        new Get(),
+        new GetCollection(),
+        new Post(
+            name: 'new process',
+            uriTemplate: '/process/new',
+            controller: CreateProcessController::class
+        )
+    ]
+)]
 class Process
 {
     #[ORM\Id]
@@ -16,36 +30,52 @@ class Process
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $mem_required = null;
+    private ?int $MemoryReq = null;
 
     #[ORM\Column]
-    private ?int $cpu_required = null;
+    private ?int $CPUReq = null;
+
+    #[ORM\ManyToOne(inversedBy: 'processes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?WorkStation $workstationId = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getMemRequired(): ?int
+    public function getMemoryReq(): ?int
     {
-        return $this->mem_required;
+        return $this->MemoryReq;
     }
 
-    public function setMemRequired(int $mem_required): static
+    public function setMemoryReq(int $MemoryReq): static
     {
-        $this->mem_required = $mem_required;
+        $this->MemoryReq = $MemoryReq;
 
         return $this;
     }
 
-    public function getCpuRequired(): ?int
+    public function getCPUReq(): ?int
     {
-        return $this->cpu_required;
+        return $this->CPUReq;
     }
 
-    public function setCpuRequired(int $cpu_required): static
+    public function setCPUReq(int $CPUReq): static
     {
-        $this->cpu_required = $cpu_required;
+        $this->CPUReq = $CPUReq;
+
+        return $this;
+    }
+
+    public function getWorkstationId(): ?WorkStation
+    {
+        return $this->workstationId;
+    }
+
+    public function setWorkstationId(?WorkStation $workstationId): static
+    {
+        $this->workstationId = $workstationId;
 
         return $this;
     }

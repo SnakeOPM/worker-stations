@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240311153801 extends AbstractMigration
+final class Version20240316101936 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,9 +21,7 @@ final class Version20240311153801 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE process_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE work_station_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE process (id INT NOT NULL, mem_required INT NOT NULL, cpu_required INT NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE work_station (id INT NOT NULL, total_mem INT NOT NULL, total_cpu INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE process (id INT NOT NULL, memory_req INT NOT NULL, cpureq INT NOT NULL, PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema): void
@@ -31,8 +29,6 @@ final class Version20240311153801 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP SEQUENCE process_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE work_station_id_seq CASCADE');
         $this->addSql('DROP TABLE process');
-        $this->addSql('DROP TABLE work_station');
     }
 }

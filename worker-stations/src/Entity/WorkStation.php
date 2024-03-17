@@ -2,12 +2,31 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Symfony\Bundle\SwaggerUi\SwaggerUiContext;
+use App\Controller\CreateWorkStationController;
 use App\Repository\WorkStationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource]
 #[ORM\Entity(repositoryClass: WorkStationRepository::class)]
+#[ApiResource(operations:[
+    new Get(),
+    new GetCollection(),
+    new Post(
+        name: 'new station',
+        uriTemplate: '/workstation/new',
+        controller: CreateWorkStationController::class,
+        normalizationContext:['groups' => ['req']]
+    )
+])]
 class WorkStation
 {
     #[ORM\Id]
@@ -15,37 +34,92 @@ class WorkStation
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups('req')]
+    #[Assert\NotNull]
+    #[ApiProperty(
+        openapiContext:[
+            'type' => 'integer',
+            'example' => '10'
+        ]
+    )]
     #[ORM\Column]
-    private ?int $total_mem = null;
+    private ?int $TotalMemory = null;
 
+    #[Groups('req')]
+    #[Assert\NotNull]
+    #[ApiProperty(
+        openapiContext:[
+            'type' => 'integer',
+            'example' => '10'
+        ]
+    )]
     #[ORM\Column]
-    private ?int $total_cpu = null;
+    private ?int $TotalCPU = null;
+
+    #[Assert\Blank]
+    #[ORM\OneToMany(targetEntity: Process::class, mappedBy: 'workstationId')]
+    private Collection $processes;
+
+    public function __construct()
+    {
+        $this->processes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTotalMem(): ?int
+    public function getTotalMemory(): ?int
     {
-        return $this->total_mem;
+        return $this->TotalMemory;
     }
 
-    public function setTotalMem(int $total_mem): static
+    public function setTotalMemory(int $TotalMemory): static
     {
-        $this->total_mem = $total_mem;
+        $this->TotalMemory = $TotalMemory;
 
         return $this;
     }
 
-    public function getTotalCpu(): ?int
+    public function getTotalCPU(): ?int
     {
-        return $this->total_cpu;
+        return $this->TotalCPU;
     }
 
-    public function setTotalCpu(int $total_cpu): static
+    public function setTotalCPU(int $TotalCPU): static
     {
-        $this->total_cpu = $total_cpu;
+        $this->TotalCPU = $TotalCPU;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Process>
+     */
+    public function getProcesses(): Collection
+    {
+        return $this->processes;
+    }
+
+    public function addProcess(Process $process): static
+    {
+        if (!$this->processes->contains($process)) {
+            $this->processes->add($process);
+            $process->setWorkstationId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProcess(Process $process): static
+    {
+        if ($this->processes->removeElement($process)) {
+            // set the owning side to null (unless already changed)
+            if ($process->getWorkstationId() === $this) {
+                $process->setWorkstationId(null);
+            }
+        }
 
         return $this;
     }
