@@ -30,7 +30,7 @@ class WorkStationRepository extends ServiceEntityRepository
         $this->entityManager->flush();
     }
 
-    public function findSmallestStations()
+    public function getStationsInASCorder()
     {
         return $this->createQueryBuilder('e')
         ->select('e')

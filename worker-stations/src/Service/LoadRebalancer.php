@@ -4,7 +4,7 @@ namespace App\Service;
 use App\Repository\ProcessRepository;
 use App\Repository\WorkStationRepository;
 
-class RebalanceLoad
+class LoadRebalancer
 {
     private $workStationRepository;
     private $processRepository;
@@ -16,6 +16,6 @@ class RebalanceLoad
     
     public function rebalance()
     {
-        dd($this->workStationRepository->findSmallestStations());
+        dd($this->workStationRepository->getStationsInASCorder());
     }
 }
