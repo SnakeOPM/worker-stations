@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class CreateWorkStationController extends AbstractController
+class DeleteWorkStationController extends AbstractController
 {
     #[Route(name: 'app_create_work_station', methods:['POST'])]
     public function __invoke(WorkStation $workStation, WorkStationRepository $repository, LoadRebalancer $balancer): JsonResponse

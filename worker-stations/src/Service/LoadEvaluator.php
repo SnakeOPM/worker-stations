@@ -4,6 +4,9 @@ namespace App\Service;
 
 use App\Entity\WorkStation;
 
+/**
+ * сервис для подсчета нагрузки процессов
+ */
 class LoadEvaluator
 {
     public function getAbsoluteCurrentLoad(WorkStation $workStation): array
@@ -13,14 +16,27 @@ class LoadEvaluator
         $processes = $workStation->getProcesses();
         foreach($processes as $process)
         {
+            dump($process);
             $cpuload += $process->getCPUReq();
             $memload += $process->getMemoryReq();
         }
         return ['currentCPUload' => $cpuload, 'currentMemLoad' => $memload];
     }
-
-    public function getCurrentLoadInPercent(WorkStation $workStation)
+    public function getCurrentLoadInPercent(WorkStation $workStation): array
     {
-        $rowLoad = $this->getAbsoluteCurrentLoad($workStation); //todo: сделать нагрузку в процентах, и назначать процесс на минимально нагруженную в них, а ребалансировку делать за счет поиска масимально нагрженной машины и противположной и их переброска
+        $maxCPU = $workStation->getTotalCPU();
+        $maxMem = $workStation->getTotalMemory();
+        $rowLoad = $this->getAbsoluteCurrentLoad($workStation);
+        return ['currentCPUload' => $rowLoad['currentCPUload'] / $maxCPU * 100, 'currentMemLoad' => $rowLoad['currentMemLoad'] / $maxMem * 100];  
+    }
+
+    public function getWorkstationsloadInPercentArray(array $workStations)
+    {
+        $result = [];
+        foreach($workStations as $workStation)
+        {
+            $result[] = $this->getCurrentLoadInPercent($workStation);
+        }
+        return $result; 
     }
 }

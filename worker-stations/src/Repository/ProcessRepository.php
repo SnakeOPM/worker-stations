@@ -24,9 +24,26 @@ class ProcessRepository extends ServiceEntityRepository
         parent::__construct($registry, Process::class);
     }
 
-    public function add(Process $process)
+    public function add(Process $process): void
     {
         $this->entityManager->persist($process);
+        $this->entityManager->flush();
+    }
+
+    public function remove(Process $process): void
+    {
+        $this->entityManager->remove($process);
+        $this->entityManager-flush();
+    }
+
+    public function unlinkAllWorkstations(): void
+    {
+        $processes = $this->findAll();
+        foreach($processes as $process)
+        {
+            $process->setWorkstationId(null);
+            $this->entityManager->persist($process);
+        }
         $this->entityManager->flush();
     }
     public function findSmallestProcesses()

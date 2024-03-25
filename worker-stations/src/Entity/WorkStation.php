@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Symfony\Bundle\SwaggerUi\SwaggerUiContext;
+use ApiPlatform\Metadata\Delete;
 use App\Controller\CreateWorkStationController;
 use App\Repository\WorkStationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,13 +18,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WorkStationRepository::class)]
 #[ApiResource(operations:[
-    new Get(),
-    new GetCollection(),
+    new Get(
+        uriTemplate: '/workstation/{id}'
+    ),
+    new GetCollection(
+        uriTemplate: '/workstations'
+    ),
     new Post(
         name: 'new station',
         uriTemplate: '/workstation/new',
         controller: CreateWorkStationController::class,
         normalizationContext:['groups' => ['req']]
+    ),
+    new Delete(
+        uriTemplate:'workstation/{id}',
     )
 ])]
 class WorkStation
@@ -39,7 +46,7 @@ class WorkStation
     #[ApiProperty(
         openapiContext:[
             'type' => 'integer',
-            'example' => '10'
+            'example' => '200'
         ]
     )]
     #[ORM\Column]
@@ -50,13 +57,18 @@ class WorkStation
     #[ApiProperty(
         openapiContext:[
             'type' => 'integer',
-            'example' => '10'
+            'example' => '100'
         ]
     )]
     #[ORM\Column]
     private ?int $TotalCPU = null;
 
     #[Assert\Blank]
+    #[ApiProperty(
+        openapiContext:[
+            'type' => 'null'
+        ]
+    )]
     #[ORM\OneToMany(targetEntity: Process::class, mappedBy: 'workstationId')]
     private Collection $processes;
 

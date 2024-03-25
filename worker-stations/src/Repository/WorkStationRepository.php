@@ -24,9 +24,15 @@ class WorkStationRepository extends ServiceEntityRepository
         parent::__construct($registry, WorkStation::class);
     }
 
-    public function add(WorkStation $workStation)
+    public function add(WorkStation $workStation): void
     {
         $this->entityManager->persist($workStation);
+        $this->entityManager->flush();
+    }
+
+    public function remove(WorkStation $workStation): void
+    {
+        $this->entityManager->remove($workStation);
         $this->entityManager->flush();
     }
 

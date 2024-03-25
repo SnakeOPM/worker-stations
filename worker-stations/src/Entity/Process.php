@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Controller\BalanceProcessesController;
 use App\Controller\CreateProcessController;
 use App\Repository\ProcessRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,13 +16,20 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ProcessRepository::class)]
 #[ApiResource(
     operations:[
-        new Get(),
+        new Get(
+        ),
+        new Patch(
+            name: 'rebalance',
+            uriTemplate: '/processes/rebalance',
+            controller: BalanceProcessesController::class,
+        ),
         new GetCollection(),
         new Post(
             name: 'new process',
             uriTemplate: '/process/new',
             controller: CreateProcessController::class
-        )
+        ),
+        new Delete()
     ]
 )]
 class Process
@@ -36,7 +46,7 @@ class Process
     private ?int $CPUReq = null;
 
     #[ORM\ManyToOne(inversedBy: 'processes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?WorkStation $workstationId = null;
 
     public function getId(): ?int
