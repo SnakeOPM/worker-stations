@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "a0af8400-ca3f-46c4-9ed0-de5632848d25",
+		"name": "workstations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29694452"
+	},
+	"item": [
+		{
+			"name": "127.0.0.1:8085/api/work_stations/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8085/api/work_stations/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"work_stations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:8085/api/processes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8085/api/processes",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"processes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:8085/api/workstation/new",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"TotalCPU\": 10000,\n   \"TotalMemory\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8085/api/workstation/new",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"workstation",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:8085/api/process/new",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"CPUReq\": 3000,\n   \"MemoryReq\": 3000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8085/api/process/new",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"process",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:8085/api/workstation/",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8085/api/workstation/10",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"workstation",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:8085/api/process/5",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8085/api/process/5",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"process",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
