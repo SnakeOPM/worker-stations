@@ -7,7 +7,7 @@ use App\Repository\ProcessRepository;
 use App\Repository\WorkStationRepository;
 
 /**
- * сервис для выбора оптимальной машины 🚗🚗🚗
+ * сервис для выбора оптимальной машины 
  */
 class LoadResolver
 {
@@ -20,7 +20,6 @@ class LoadResolver
         $this->processRepository = $processRepository;
         $this->loadEvaluator = $loadEvaluator;
     }
-    
     public function resolveOptimalWStation(Process $process, $stations = null): Process
     {
         $cpureq = $process->getCPUReq();
@@ -30,11 +29,11 @@ class LoadResolver
         }
         $stations = $this->filterSuitableStations($cpureq, $memreq, $stations);
         $percentLoad = $this->loadEvaluator->getWorkstationsloadInPercentArray($stations);
-        arsort($percentLoad);
-        foreach($stations as $station)
+        usort($percentLoad, [$this, 'sortLoad']);
+        foreach($percentLoad as $stationLoad)
         {
+            $station = $stationLoad['station'];
             $currentLoad = $this->loadEvaluator->getAbsoluteCurrentLoad($station);
-            dump($currentLoad, $station->getProcesses());
             $freeCPU = $station->getTotalCPU() - $currentLoad['currentCPUload'];
             $freeMem = $station->getTotalMemory() - $currentLoad['currentMemLoad'];
             if ($freeCPU >= $cpureq && $freeMem >= $memreq){
@@ -64,5 +63,10 @@ class LoadResolver
         }
         return $stations;
         
+    }
+
+    private function sortLoad($a, $b)
+    {
+        return $a['currentCPUload'] <=> $b['currentCPUload'] & $a['currentMemLoad'] <=> $b['currentMemLoad'];
     }
 }

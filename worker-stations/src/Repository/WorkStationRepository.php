@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Process;
 use App\Entity\WorkStation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,6 +33,10 @@ class WorkStationRepository extends ServiceEntityRepository
 
     public function remove(WorkStation $workStation): void
     {
+        $processes = $workStation->getProcesses();
+        foreach($processes as $process){
+            $workStation->removeProcess($process);
+        }
         $this->entityManager->remove($workStation);
         $this->entityManager->flush();
     }
@@ -44,5 +49,29 @@ class WorkStationRepository extends ServiceEntityRepository
         ->orderBy('e.TotalCPU', 'ASC')
         ->getQuery()
         ->getResult();
+    }
+
+    public function isPossibleToDelete(WorkStation $workStation)
+    {
+        $stations = $this->findAll();
+        $processes = $this->entityManager->getRepository(Process::class)->findAll();
+        $stationsCPUs = 0;
+        $stationsMem = 0;
+        $processesCPUs = 0;
+        $processesMem = 0;
+        foreach ($stations as $station)
+        {
+            $stationsCPUs += $station->getTotalCPU();
+            $stationsMem += $station->getTotalMemory();
+        }
+        foreach ($processes as $process)
+        {
+            $processesCPUs += $process->getCPUReq();
+            $processesMem += $process->getMemoryReq();
+        }
+        $checkCPUs = $stationsCPUs - $workStation->getTotalCPU() >= $processesCPUs;
+        $checkMem = $stationsMem - $workStation->getTotalMemory() >= $processesMem;
+        return ($checkCPUs && $checkMem)? true : false;
+
     }
 }

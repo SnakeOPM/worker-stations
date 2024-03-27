@@ -16,7 +16,6 @@ class LoadEvaluator
         $processes = $workStation->getProcesses();
         foreach($processes as $process)
         {
-            dump($process);
             $cpuload += $process->getCPUReq();
             $memload += $process->getMemoryReq();
         }
@@ -27,7 +26,9 @@ class LoadEvaluator
         $maxCPU = $workStation->getTotalCPU();
         $maxMem = $workStation->getTotalMemory();
         $rowLoad = $this->getAbsoluteCurrentLoad($workStation);
-        return ['currentCPUload' => $rowLoad['currentCPUload'] / $maxCPU * 100, 'currentMemLoad' => $rowLoad['currentMemLoad'] / $maxMem * 100];  
+        return ['station' => $workStation,
+         'currentCPUload' => $rowLoad['currentCPUload'] / $maxCPU * 100,
+        'currentMemLoad' => $rowLoad['currentMemLoad'] / $maxMem * 100];  
     }
 
     public function getWorkstationsloadInPercentArray(array $workStations)

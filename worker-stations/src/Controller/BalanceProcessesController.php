@@ -19,6 +19,6 @@ class BalanceProcessesController extends AbstractController
     {
         $balancer->rebalance();
 
-        return new JsonResponse(["status" => "ok"]);
+        return new JsonResponse(["сомнительно, но" => "ok"]);
     }
 }

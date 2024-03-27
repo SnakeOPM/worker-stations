@@ -29,7 +29,9 @@ use Doctrine\ORM\Mapping as ORM;
             uriTemplate: '/process/new',
             controller: CreateProcessController::class
         ),
-        new Delete()
+        new Delete(
+            uriTemplate:'/process/{id}'
+        )
     ]
 )]
 class Process

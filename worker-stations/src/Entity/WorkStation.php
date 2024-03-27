@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use App\Controller\CreateWorkStationController;
+use App\Controller\DeleteWorkStationController;
 use App\Repository\WorkStationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,6 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ),
     new Delete(
         uriTemplate:'workstation/{id}',
+        controller: DeleteWorkStationController::class
     )
 ])]
 class WorkStation
