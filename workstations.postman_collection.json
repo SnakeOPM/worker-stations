@@ -35,7 +35,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "127.0.0.1:8085/api/workstations/",
+					"raw": "127.0.0.1:8085/api/workstations/load",
 					"host": [
 						"127",
 						"0",
@@ -46,7 +46,7 @@
 					"path": [
 						"api",
 						"workstations",
-						""
+						"load"
 					]
 				}
 			},
@@ -87,7 +87,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"TotalCPU\": 100,\n   \"TotalMemory\": 100\n}",
+					"raw": "{\n   \"TotalCPU\": 1000,\n   \"TotalMemory\": 1000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,7 +125,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"CPUReq\": 3000,\n   \"MemoryReq\": 3000\n}",
+					"raw": "{\n   \"CPUReq\": 50,\n   \"MemoryReq\": 50\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -162,7 +162,7 @@
 					}
 				],
 				"url": {
-					"raw": "127.0.0.1:8085/api/workstation/10",
+					"raw": "127.0.0.1:8085/api/workstation/20",
 					"host": [
 						"127",
 						"0",
@@ -173,7 +173,7 @@
 					"path": [
 						"api",
 						"workstation",
-						"10"
+						"20"
 					]
 				}
 			},
@@ -185,7 +185,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "127.0.0.1:8085/api/process/5",
+					"raw": "127.0.0.1:8085/api/process/25",
 					"host": [
 						"127",
 						"0",
@@ -196,7 +196,7 @@
 					"path": [
 						"api",
 						"process",
-						"5"
+						"25"
 					]
 				}
 			},
