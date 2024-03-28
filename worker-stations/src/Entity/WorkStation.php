@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use App\Controller\CreateWorkStationController;
 use App\Controller\DeleteWorkStationController;
+use App\Controller\GetPercentLoadsController;
 use App\Repository\WorkStationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +25,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     ),
     new GetCollection(
         uriTemplate: '/workstations'
+    ),
+    new GetCollection(
+        uriTemplate: '/workstations/load',
+        controller: GetPercentLoadsController::class
     ),
     new Post(
         name: 'new station',

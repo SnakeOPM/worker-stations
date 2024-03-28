@@ -33,7 +33,7 @@ class ProcessRepository extends ServiceEntityRepository
     public function remove(Process $process): void
     {
         $this->entityManager->remove($process);
-        $this->entityManager-flush();
+        $this->entityManager->flush();
     }
 
     public function unlinkAllWorkstations(): void

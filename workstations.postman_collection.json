@@ -7,12 +7,12 @@
 	},
 	"item": [
 		{
-			"name": "127.0.0.1:8085/api/work_stations/",
+			"name": "getAllWorkstations",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "127.0.0.1:8085/api/work_stations/",
+					"raw": "127.0.0.1:8085/api/workstations/",
 					"host": [
 						"127",
 						"0",
@@ -22,7 +22,7 @@
 					"port": "8085",
 					"path": [
 						"api",
-						"work_stations",
+						"workstations",
 						""
 					]
 				}
@@ -30,7 +30,30 @@
 			"response": []
 		},
 		{
-			"name": "127.0.0.1:8085/api/processes",
+			"name": "getAllWorkstationsLoad",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8085/api/workstations/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"workstations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllProcesses",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -52,7 +75,7 @@
 			"response": []
 		},
 		{
-			"name": "127.0.0.1:8085/api/workstation/new",
+			"name": "addNewWorkstation",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -64,7 +87,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"TotalCPU\": 10000,\n   \"TotalMemory\": 10000\n}",
+					"raw": "{\n   \"TotalCPU\": 100,\n   \"TotalMemory\": 100\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +113,7 @@
 			"response": []
 		},
 		{
-			"name": "127.0.0.1:8085/api/process/new",
+			"name": "addNewProcess",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -128,7 +151,7 @@
 			"response": []
 		},
 		{
-			"name": "127.0.0.1:8085/api/workstation/",
+			"name": "deleteWorkstation",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -157,7 +180,7 @@
 			"response": []
 		},
 		{
-			"name": "127.0.0.1:8085/api/process/5",
+			"name": "deleteProcessById",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -174,6 +197,44 @@
 						"api",
 						"process",
 						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ManualRebalance",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/merge-patch+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8085/api/processes/rebalance",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"processes",
+						"rebalance"
 					]
 				}
 			},

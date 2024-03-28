@@ -47,7 +47,6 @@ class LoadResolver
         {
             throw new \Exception('No suitable workstation for this process');
         }
-        $this->workStationRepository->add($station);
         return $process;
     }
 

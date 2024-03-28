@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Controller\BalanceProcessesController;
 use App\Controller\CreateProcessController;
+use App\Controller\DeleteProcessController;
 use App\Repository\ProcessRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,7 +31,8 @@ use Doctrine\ORM\Mapping as ORM;
             controller: CreateProcessController::class
         ),
         new Delete(
-            uriTemplate:'/process/{id}'
+            uriTemplate:'/process/{id}',
+            controller: DeleteProcessController::class
         )
     ]
 )]

@@ -4,18 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Process;
 use App\Repository\ProcessRepository;
+use App\Service\LoadRebalancer;
 use App\Service\LoadResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class CreateProcessController extends AbstractController
+class DeleteProcessController extends AbstractController
 {
-    #[Route('/create/process', name: 'app_create_process')]
-    public function __invoke(Process $process, ProcessRepository $repository, LoadResolver $loadResolver): JsonResponse
+    #[Route('/delete/process/q', name: 'app_create_process')]
+    public function __invoke(Process $process, LoadRebalancer $balancer, ProcessRepository $repository): JsonResponse
     {
-        $process = $loadResolver->resolveOptimalWStation($process);
-        $repository->add($process);
+        $repository->remove($process);
+        $balancer->rebalance();
         return new JsonResponse([['status' => 'ok',
         'content' => [ 'id' => $process->getId(), 
         'TotalCpu' => $process->getCPUReq(),
